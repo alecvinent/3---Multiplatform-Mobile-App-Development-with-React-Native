@@ -7,6 +7,8 @@ import Constants from "expo-constants";
 import Menu from "./MenuComponent";
 import DishDetail from "./DishDetailComponent";
 import Home from "./HomeComponent";
+import Contact from "./ContactComponent";
+import About from "./Aboutcomponent";
 
 //
 const MenuNavigator = createStackNavigator(
@@ -28,6 +30,7 @@ const MenuNavigator = createStackNavigator(
   }
 );
 
+//
 const HomeNavigator = createStackNavigator(
   {
     Home: { screen: Home },
@@ -45,6 +48,43 @@ const HomeNavigator = createStackNavigator(
   }
 );
 
+//
+const ContactNavigator = createStackNavigator(
+  {
+    Contact: { screen: Contact },
+  },
+  {
+    navigationOptions: {
+      headerStyle: {
+        backgroundColor: "#512dab",
+      },
+      headerTintColor: "#fff",
+      headerTitleStyle: {
+        color: "#fff",
+      },
+    },
+  }
+);
+
+//
+const AboutNavigator = createStackNavigator(
+  {
+    About: { screen: About },
+  },
+  {
+    navigationOptions: {
+      headerStyle: {
+        backgroundColor: "#512dab",
+      },
+      headerTintColor: "#fff",
+      headerTitleStyle: {
+        color: "#fff",
+      },
+    },
+  }
+);
+
+//
 const MainNavigator = createDrawerNavigator(
   {
     Home: {
@@ -54,11 +94,25 @@ const MainNavigator = createDrawerNavigator(
         drawerLabel: "Home",
       },
     },
+    About: {
+      screen: AboutNavigator,
+      navigationOptions: {
+        title: "About",
+        drawerLabel: "About Us",
+      },
+    },
     Menu: {
       screen: MenuNavigator,
       navigationOptions: {
         title: "Menu",
         drawerLabel: "Menu",
+      },
+    },
+    Contact: {
+      screen: ContactNavigator,
+      navigationOptions: {
+        title: "Contact",
+        drawerLabel: "Contact Us",
       },
     },
   },
