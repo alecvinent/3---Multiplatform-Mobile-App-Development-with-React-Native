@@ -8,7 +8,7 @@ import Menu from "./MenuComponent";
 import DishDetail from "./DishDetailComponent";
 import Home from "./HomeComponent";
 import Contact from "./ContactComponent";
-import About from "./Aboutcomponent";
+import About from "./AboutComponent";
 
 //
 const MenuNavigator = createStackNavigator(
