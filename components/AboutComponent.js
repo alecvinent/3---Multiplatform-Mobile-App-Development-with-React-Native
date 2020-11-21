@@ -1,8 +1,8 @@
 import { Card, ListItem } from "react-native-elements";
-import { FlatList, Image, Text, View } from "react-native";
+import { FlatList, Image, ScrollView, Text } from "react-native";
 import React, { Component } from "react";
 
-import { LEADERS } from "../shared/leaders";
+import { Loading } from "./LoadingComponent";
 import { STYLES } from "../shared/styles";
 import { baseUrl } from "../shared/baseUrl";
 import { connect } from "react-redux";
@@ -36,8 +36,7 @@ function History() {
 }
 
 //
-class About extends Component { 
-
+class About extends Component {
   static navigationOptions = {
     title: "About Us",
   };
@@ -55,25 +54,46 @@ class About extends Component {
           key={index}
           title={item.name}
           subtitle={item.description}
-          leftAvatar={custom_image}
+          leftAvatar={{ uri: baseUrl + item.image }}
         />
       );
     };
-
-    return (
-      <View>
-        <History />
-        <Card>
-          <Card.Title>Corporate Leadership</Card.Title>
-          <Card.Divider />
-          <FlatList
-            data={this.props.leaders.leaders}
-            renderItem={RenderLeaderItem}
-            keyExtractor={(item) => item.id.toString()}
-          />
-        </Card>
-      </View>
-    );
+    if (this.props.leaders.isLoading) {
+      return (
+        <ScrollView>
+          <History />
+          <Card>
+            <Card.Title>Corporate Leadership</Card.Title>
+            <Loading />
+          </Card>
+        </ScrollView>
+      );
+    } else if (this.props.leaders.errMess) {
+      return (
+        <ScrollView>
+          <History />
+          <Card>
+            <Card.Title>Corporate Leadership</Card.Title>
+            <Text>{this.props.leaders.errMess}</Text>
+          </Card>
+        </ScrollView>
+      );
+    } else {
+      return (
+        <ScrollView>
+          <History />
+          <Card>
+            <Card.Title>Corporate Leadership</Card.Title>
+            <Card.Divider />
+            <FlatList
+              data={this.props.leaders.leaders}
+              renderItem={RenderLeaderItem}
+              keyExtractor={(item) => item.id.toString()}
+            />
+          </Card>
+        </ScrollView>
+      );
+    }
   }
 }
 

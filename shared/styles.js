@@ -36,5 +36,15 @@ export const STYLES = StyleSheet.create({
     color: "white",
     fontSize: 20,
     fontWeight: "bold",
-  }
+  },
+  loadingView: {
+    alignItems: "center",
+    justifyContent: "center",
+    flex: 1,
+  },
+  loadingText: {
+    color: "#512da8",
+    fontSize: 14,
+    fontWeight: "bold",
+  },
 });
