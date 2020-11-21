@@ -7,6 +7,8 @@ export const COMMENTS_FAILED = 'COMMENTS_FAILED';
 export const DISHES_LOADING = 'DISHES_LOADING';
 export const DISHES_FAILED = 'DISHES_FAILED';
 export const ADD_DISHES = 'ADD_DISHES';
+export const POST_FAVORITE_DISH = 'POST_FAVORITE_DISH';
+export const ADD_FAVORITE_DISH = 'ADD_FAVORITE_DISH';
 
 // promos
 export const PROMOS_LOADING = 'PROMOS_LOADING';

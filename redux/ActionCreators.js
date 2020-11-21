@@ -83,8 +83,20 @@ export const addDishes = (dishes) => ({
     payload: dishes
 });
 
+export const postFavorite = (dishId)  => (dispatch) => {
+  setTimeout(() => {
+      dispatch(addFavorite(dishId));
+  }, 2000);
+};
 
 
+export const addFavorite = (dishId) => ({
+  type: ActionTypes.ADD_FAVORITE_DISH,
+  payload: dishId
+});
+
+
+// comments
 export const fetchComments = () => (dispatch) => {    
     return fetch(baseUrl + 'comments')
     .then(response => {
@@ -115,6 +127,8 @@ export const addComments = (comments) => ({
     payload: comments
 });
 
+
+// promotions
 export const fetchPromos = () => (dispatch) => {
     
     dispatch(promosLoading());

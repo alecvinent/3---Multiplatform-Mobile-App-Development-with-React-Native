@@ -13,11 +13,21 @@ import Constants from "expo-constants";
 import { STYLES } from "../shared/styles";
 import { baseUrl } from "../shared/baseUrl";
 import { connect } from "react-redux";
+import { postFavorite } from "../redux/ActionCreators";
 
 //
 const mapStateToProps = (state) => {
-  return { dishes: state.dishes, comments: state.comments };
+  return {
+    dishes: state.dishes,
+    comments: state.comments,
+    favorites: state.favorites,
+  };
 };
+
+//
+const mapDispatchToProps = (dispatch) => ({
+  postFavorite: (dishId) => dispatch(postFavorite(dishId)),
+});
 
 //
 function RenderDish(props) {
@@ -25,8 +35,13 @@ function RenderDish(props) {
 
   if (dish != null) {
     return (
-      <Card style={STYLES.image} featuredTitle={dish.name} featuredSubtitle={dish.category} image={{uri: baseUrl+dish.image}}>
-        <Text style={{ marginBottom: 10 }}>{dish.description}</Text>    
+      <Card
+        style={STYLES.image}
+        featuredTitle={dish.name}
+        featuredSubtitle={dish.category}
+        image={{ uri: baseUrl + dish.image }}
+      >
+        <Text style={{ marginBottom: 10 }}>{dish.description}</Text>
         <Icon
           raised
           reverse
@@ -83,16 +98,10 @@ function RenderComments(props) {
 
 //
 class DishDetail extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      favorites: [],
-    };
-  }
-
   //
   markFavorite(dishId) {
-    this.setState({ favorites: this.state.favorites.concat(dishId) });
+    console.log(dishId);
+    this.props.postFavorite(dishId);
   }
 
   //
@@ -113,7 +122,7 @@ class DishDetail extends Component {
         <ScrollView>
           <RenderDish
             dish={this.props.dishes.dishes[+dishId]}
-            favorite={this.state.favorites.some((el) => el === dishId)}
+            favorite={this.props.favorites.some((el) => el === dishId)}
             onPress={() => this.markFavorite(dishId)}
           />
           <RenderComments
@@ -126,4 +135,4 @@ class DishDetail extends Component {
     );
   }
 }
-export default connect(mapStateToProps)(DishDetail);
+export default connect(mapStateToProps, mapDispatchToProps)(DishDetail);
