@@ -1,8 +1,16 @@
-import React, { Component } from "react";
-import { Text, View, Image, FlatList } from "react-native";
 import { Card, ListItem } from "react-native-elements";
+import { FlatList, Image, Text, View } from "react-native";
+import React, { Component } from "react";
+
 import { LEADERS } from "../shared/leaders";
 import { STYLES } from "../shared/styles";
+import { baseUrl } from "../shared/baseUrl";
+import { connect } from "react-redux";
+
+//
+const mapStateToProps = (state) => {
+  return { leaders: state.leaders };
+};
 
 //
 function History() {
@@ -28,13 +36,7 @@ function History() {
 }
 
 //
-class About extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      leaders: LEADERS,
-    };
-  }
+class About extends Component { 
 
   static navigationOptions = {
     title: "About Us",
@@ -45,7 +47,7 @@ class About extends Component {
       const custom_image = (
         <Image
           style={STYLES.leader_image}
-          source={require("./images/alberto.png")}
+          source={{ uri: baseUrl + item.image }}
         />
       );
       return (
@@ -60,12 +62,12 @@ class About extends Component {
 
     return (
       <View>
-        {History()}
+        <History />
         <Card>
           <Card.Title>Corporate Leadership</Card.Title>
           <Card.Divider />
           <FlatList
-            data={this.state.leaders}
+            data={this.props.leaders.leaders}
             renderItem={RenderLeaderItem}
             keyExtractor={(item) => item.id.toString()}
           />
@@ -75,4 +77,4 @@ class About extends Component {
   }
 }
 
-export default About;
+export default connect(mapStateToProps)(About);

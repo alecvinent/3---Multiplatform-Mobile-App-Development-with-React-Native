@@ -1,17 +1,23 @@
-import React, { Component } from "react";
+import { Card, Icon } from "react-native-elements";
 import {
-  Text,
-  View,
+  FlatList,
   Image,
   Platform,
   ScrollView,
-  FlatList,
+  Text,
+  View,
 } from "react-native";
-import { Card, Icon } from "react-native-elements";
+import React, { Component } from "react";
+
 import Constants from "expo-constants";
-import { DISHES } from "../shared/dishes";
 import { STYLES } from "../shared/styles";
-import { COMMENTS } from "../shared/comments";
+import { baseUrl } from "../shared/baseUrl";
+import { connect } from "react-redux";
+
+//
+const mapStateToProps = (state) => {
+  return { dishes: state.dishes, comments: state.comments };
+};
 
 //
 function RenderDish(props) {
@@ -19,16 +25,8 @@ function RenderDish(props) {
 
   if (dish != null) {
     return (
-      <Card style={STYLES.image}>
-        <Card.Title>{dish.name}</Card.Title>
-        <Card.Divider />
-        <Image
-          style={STYLES.image}
-          resizeMode="cover"
-          source={require("./" + dish.image)}
-        />
-
-        <Text style={{ marginBottom: 10 }}>{dish.description}</Text>
+      <Card style={STYLES.image} featuredTitle={dish.name} featuredSubtitle={dish.category} image={{uri: baseUrl+dish.image}}>
+        <Text style={{ marginBottom: 10 }}>{dish.description}</Text>    
         <Icon
           raised
           reverse
@@ -88,8 +86,6 @@ class DishDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      dishes: DISHES,
-      comments: COMMENTS,
       favorites: [],
     };
   }
@@ -116,12 +112,12 @@ class DishDetail extends Component {
       >
         <ScrollView>
           <RenderDish
-            dish={this.state.dishes[+dishId]}
+            dish={this.props.dishes.dishes[+dishId]}
             favorite={this.state.favorites.some((el) => el === dishId)}
             onPress={() => this.markFavorite(dishId)}
           />
           <RenderComments
-            comments={this.state.comments.filter(
+            comments={this.props.comments.comments.filter(
               (comment) => comment.dishId === dishId
             )}
           />
@@ -130,4 +126,4 @@ class DishDetail extends Component {
     );
   }
 }
-export default DishDetail;
+export default connect(mapStateToProps)(DishDetail);

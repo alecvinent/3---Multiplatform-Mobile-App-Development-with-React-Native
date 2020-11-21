@@ -1,55 +1,46 @@
-import React, {Component} from "react";
-import { FlatList, Image, StyleSheet } from 'react-native';
-import { ListItem } from "react-native-elements";
+import { FlatList, Image, StyleSheet } from "react-native";
+import React, { Component } from "react";
 
-import { DISHES } from "../shared/dishes";
+import { Tile } from "react-native-elements";
+import { baseUrl } from "../shared/baseUrl";
+import { connect } from "react-redux";
+
+//
+const mapStateToProps = (state) => {
+  return { dishes: state.dishes };
+};
 
 //
 class Menu extends Component {
-
-  constructor(props){
-    super(props);
-    this.state = {
-      dishes: DISHES
-    };
-  };
-
   static navigationOptions = {
-    title: 'Menu',
-  };  
+    title: "Menu",
+  };
 
   //
-  render(){
-    const styles = StyleSheet.create({
-      tinyLogo: {
-        width: 50,
-        height: 50,
-      },
-    });
+  render() {
 
-  const RenderMenuItem = ({item, index}) => {
-    const custom_image = <Image style={styles.tinyLogo} source={require('./' + item.image)}/>;
+    const RenderMenuItem = ({ item, index }) => {
       return (
-          
-          <ListItem
-            key={index}
-            title={item.name}
-            subtitle={item.description}
-            hideChevron={true}
-            onPress={() => navigate('DishDetail', {dishId: item.id})}
-            leftAvatar= {custom_image}
-            />
+        <Tile
+          key={index}
+          title={item.name}
+          caption={item.description}
+          featured
+          hideChevron={true}
+          onPress={() => navigate("DishDetail", { dishId: item.id })}
+          imageSrc={{ uri: baseUrl + item.image }}
+        />
       );
-  };
+    };
 
     const { navigate } = this.props.navigation;
     return (
       <FlatList
-        data={this.state.dishes}
+        data={this.props.dishes.dishes}
         renderItem={RenderMenuItem}
         keyExtractor={(item) => item.id.toString()}
       />
     );
-  };
-};
-export default Menu;
+  }
+}
+export default connect(mapStateToProps)(Menu);

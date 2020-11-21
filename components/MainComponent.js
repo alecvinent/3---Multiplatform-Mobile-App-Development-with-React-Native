@@ -1,16 +1,51 @@
+import {
+  DrawerItems,
+  SafeAreaView,
+  createDrawerNavigator,
+  createStackNavigator,
+} from "react-navigation";
+import { Image, Platform, ScrollView, Text, View } from "react-native";
 import React, { Component } from "react";
-import { View, Platform, Image, ScrollView, Text } from "react-native";
-import { createStackNavigator, createDrawerNavigator, DrawerItems, SafeAreaView } from "react-navigation";
-import Constants from "expo-constants";
-import { Icon } from "react-native-elements";
+import {
+  fetchComments,
+  fetchDishes,
+  fetchLeaders,
+  fetchPromos,
+} from "../redux/ActionCreators";
 
-//
-import Menu from "./MenuComponent";
+import About from "./AboutComponent";
+import Constants from "expo-constants";
+import Contact from "./ContactComponent";
 import DishDetail from "./DishDetailComponent";
 import Home from "./HomeComponent";
-import Contact from "./ContactComponent";
-import About from "./AboutComponent";
+import { Icon } from "react-native-elements";
+import Menu from "./MenuComponent";
 import { STYLES } from "../shared/styles";
+import { connect } from "react-redux";
+
+//
+const mapStateToProps = (state) => {
+  return {
+    dishes: state.dishes,
+    comments: state.comments,
+    promotions: state.promotions,
+    leaders: state.leaders,
+  };
+};
+
+//
+const mapDispatchToProps = (dispatch) => ({
+  fetchDishes: () => {
+    dispatch(fetchDishes());
+  },
+  fetchComments: () => dispatch(fetchComments()),
+  fetchPromos: () => dispatch(fetchPromos()),
+  fetchLeaders: () => dispatch(fetchLeaders()),
+
+  // postComment: (dishId, rating, author, comment) => dispatch(postComment(dishId, rating, author, comment)),
+  // resetFeedbackForm: () => { dispatch(actions.reset('feedback'))},
+  // postFeedback: (firstname, lastname, telnum, email, agree, contactType, message) => dispatch(postFeedback(firstname, lastname, telnum, email, agree, contactType, message)),
+});
 
 //
 const MenuNavigator = createStackNavigator(
@@ -137,12 +172,18 @@ const AboutNavigator = createStackNavigator(
 //
 const CustomDrawerContentComponent = (props) => (
   <ScrollView>
-    <SafeAreaView style={STYLES.container} forceInset={{top: 'always', horizontal: 'never'}}>
+    <SafeAreaView
+      style={STYLES.container}
+      forceInset={{ top: "always", horizontal: "never" }}
+    >
       <View style={STYLES.drawerHeader}>
-        <View style={{flex:1}}>
-          <Image source={require('./images/logo.png')} style={STYLES.drawerImage} />
+        <View style={{ flex: 1 }}>
+          <Image
+            source={require("./images/logo.png")}
+            style={STYLES.drawerImage}
+          />
         </View>
-        <View style={{flex: 2}}>
+        <View style={{ flex: 2 }}>
           <Text style={STYLES.drawerHeaderText}>Ristorante Con Fusion</Text>
         </View>
       </View>
@@ -159,9 +200,9 @@ const MainNavigator = createDrawerNavigator(
       navigationOptions: {
         title: "Home",
         drawerLabel: "Home",
-        drawerIcon:({tintColor}) => (
+        drawerIcon: ({ tintColor }) => (
           <Icon name="home" type="font-awesome" color={tintColor} />
-        )
+        ),
       },
     },
     About: {
@@ -169,9 +210,9 @@ const MainNavigator = createDrawerNavigator(
       navigationOptions: {
         title: "About",
         drawerLabel: "About Us",
-        drawerIcon:({tintColor}) => (
+        drawerIcon: ({ tintColor }) => (
           <Icon name="info-circle" type="font-awesome" color={tintColor} />
-        )
+        ),
       },
     },
     Menu: {
@@ -179,9 +220,9 @@ const MainNavigator = createDrawerNavigator(
       navigationOptions: {
         title: "Menu",
         drawerLabel: "Menu",
-        drawerIcon:({tintColor}) => (
+        drawerIcon: ({ tintColor }) => (
           <Icon name="list" type="font-awesome" color={tintColor} />
-        )
+        ),
       },
     },
     Contact: {
@@ -189,20 +230,28 @@ const MainNavigator = createDrawerNavigator(
       navigationOptions: {
         title: "Contact Us",
         drawerLabel: "Contact Us",
-        drawerIcon:({tintColor}) => (
+        drawerIcon: ({ tintColor }) => (
           <Icon name="address-card" type="font-awesome" color={tintColor} />
-        )
+        ),
       },
     },
   },
   {
     drawerBackgroundColor: "#d1c4e9",
-    contentComponent: CustomDrawerContentComponent
+    contentComponent: CustomDrawerContentComponent,
   }
 );
 
 //
 class Main extends Component {
+  //
+  componentDidMount() {
+    this.props.fetchDishes();
+    this.props.fetchComments();
+    this.props.fetchPromos();
+    this.props.fetchLeaders();
+  }
+
   //
   render() {
     return (
@@ -218,4 +267,4 @@ class Main extends Component {
   }
 }
 
-export default Main;
+export default connect(mapStateToProps, mapDispatchToProps)(Main);
