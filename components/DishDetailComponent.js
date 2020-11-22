@@ -52,6 +52,16 @@ function RenderDish(props) {
             props.favorite ? console.log("Already favorite") : props.onPress()
           }
         />
+        <Icon
+          raised
+          reverse
+          name="edit"
+          type="font-awesome"
+          color="#517fa4"
+          onPress={() =>
+            props.favorite ? console.log("Already favorite") : props.onPress()
+          }
+        />
       </Card>
     );
   } else {

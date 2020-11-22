@@ -47,4 +47,31 @@ export const STYLES = StyleSheet.create({
     fontSize: 14,
     fontWeight: "bold",
   },
+  formRow: {
+    alignItems: "center",
+    justifyContent: "center",
+    flex: 1,
+    flexDirection: "row",
+    margin: 20,
+  },
+  formLabel: {
+    fontSize: 18,
+    flex: 2,
+  },
+  formItem: {
+    flex: 1,
+  },
+  formItemDatePicker: {
+    flex: 2,
+    marginRight: 20,
+  },
+  dateIcon: {
+    position: "absolute",
+    left: 0,
+    top: 4,
+    marginLeft: 0,
+  },
+  dateInput: {
+    marginLeft: 36,
+  },
 });
