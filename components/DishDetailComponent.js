@@ -1,11 +1,11 @@
-import { Card, Icon } from "react-native-elements";
+import { Card, Icon, Modal } from "react-native-elements";
 import {
   FlatList,
   Image,
   Platform,
   ScrollView,
   Text,
-  View,
+  View
 } from "react-native";
 import React, { Component } from "react";
 
@@ -42,6 +42,7 @@ function RenderDish(props) {
         image={{ uri: baseUrl + dish.image }}
       >
         <Text style={{ marginBottom: 10 }}>{dish.description}</Text>
+        <View style={{flex:1, alignItems:'center'}}>
         <Icon
           raised
           reverse
@@ -62,6 +63,7 @@ function RenderDish(props) {
             props.favorite ? console.log("Already favorite") : props.onPress()
           }
         />
+        </View>
       </Card>
     );
   } else {

@@ -1,5 +1,6 @@
 import {
   Button,
+  Modal,
   Picker,
   Platform,
   ScrollView,
@@ -24,8 +25,31 @@ class Reservation extends Component {
       smoking: false,
       date: new Date(),
       show: false,
-      mode: 'date'
+      mode: "date",
+      showModal: false,
     };
+  }
+
+  //
+  toggleModal() {
+    this.setState(prevState => {
+      return {
+        showModal: !prevState.showModal
+      }
+    });
+    console.log('showModal: ',this.state.showModal);
+  }
+
+  //
+  resetForm() {
+    this.setState({
+      guests: 1,
+      smoking: false,
+      date: new Date(),
+      show: false,
+      mode: "date",
+      showModal: false,
+    });
   }
 
   //
@@ -36,14 +60,8 @@ class Reservation extends Component {
   //
   handleReservation() {
     console.log(JSON.stringify(this.state));
-    this.state = {
-      guests: 1,
-      smoking: false,
-      date: new Date(),
-      show: false,
-      mode: 'date'
-    };
-  }
+    this.toggleModal();
+}
 
   //
   render() {
@@ -86,6 +104,8 @@ class Reservation extends Component {
         </View>
         {/* /smoking */}
         {/* date and time */}
+        {/* // error sobre datepicker: */}
+        {/* // https://www.coursera.org/learn/react-native/discussions/weeks/2/threads/X4_8u6wNTKWP_LusDRyl6g */}
         <View style={STYLES.formRow}>
           <Text style={STYLES.formLabel}>Date and Time</Text>
           <TouchableOpacity
@@ -133,12 +153,28 @@ class Reservation extends Component {
             accessibilityLabel="learn more about this"
           />
         </View>
+        {/* modal */}
+        <Modal animationType = {"slide"} transparent = {false}
+                    visible = {this.state.showModal}
+                    onDismiss = {() => this.toggleModal() }
+                    onRequestClose = {() => this.toggleModal() }>
+                    <View style = {STYLES.modal}>
+                        <Text style = {STYLES.modalTitle}>Your Reservation</Text>
+                        <Text style = {STYLES.modalText}>Number of Guests: {this.state.guests}</Text>
+                        <Text style = {STYLES.modalText}>Smoking?: {this.state.smoking ? 'Yes' : 'No'}</Text>
+                        <Text style = {STYLES.modalText}>Date and Time: {this.state.date.toISOString()}</Text>
+                        
+                        <Button 
+                            onPress = {() =>{this.toggleModal(); this.resetForm();}}
+                            color="#512DA8"
+                            title="Close" 
+                            />
+                    </View>
+                </Modal>
+        {/* /modal */}
       </ScrollView>
     );
   }
 }
 
 export default Reservation;
-
-// error sobre datepicker:
-// https://www.coursera.org/learn/react-native/discussions/weeks/2/threads/X4_8u6wNTKWP_LusDRyl6g

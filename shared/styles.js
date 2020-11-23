@@ -74,4 +74,20 @@ export const STYLES = StyleSheet.create({
   dateInput: {
     marginLeft: 36,
   },
+  modal: {
+    justifyContent: "center",
+    margin: 20,
+  },
+  modalTitle: {
+    fontSize: 24,
+    fontWeight: "bold",
+    backgroundColor: "#512da8",
+    textAlign: "center",
+    color: "white",
+    marginBottom: 20,
+  },
+  modalText: {
+    fontSize: 18,
+    margin: 10,
+  },
 });
