@@ -9,6 +9,8 @@ export const DISHES_FAILED = 'DISHES_FAILED';
 export const ADD_DISHES = 'ADD_DISHES';
 export const POST_FAVORITE_DISH = 'POST_FAVORITE_DISH';
 export const ADD_FAVORITE_DISH = 'ADD_FAVORITE_DISH';
+export const DELETE_FAVORITE_DISH = 'DELETE_FAVORITE_DISH';
+
 
 // promos
 export const PROMOS_LOADING = 'PROMOS_LOADING';

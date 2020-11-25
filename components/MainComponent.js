@@ -17,10 +17,11 @@ import About from "./AboutComponent";
 import Constants from "expo-constants";
 import Contact from "./ContactComponent";
 import DishDetail from "./DishDetailComponent";
+import Favorites from "./FavoriteComponent";
 import Home from "./HomeComponent";
 import { Icon } from "react-native-elements";
 import Menu from "./MenuComponent";
-import Reservation from './ReservationComponent';
+import Reservation from "./ReservationComponent";
 import { STYLES } from "../shared/styles";
 import { connect } from "react-redux";
 
@@ -171,22 +172,56 @@ const AboutNavigator = createStackNavigator(
 );
 
 //
-const ReservationNavigator = createStackNavigator({
-  Reservation: { screen: Reservation }
-}, {
-  navigationOptions: ({ navigation }) => ({
-    headerStyle: {
-        backgroundColor: "#512DA8"
-    },
-    headerTitleStyle: {
-        color: "#fff"            
-    },
-    headerTintColor: "#fff",
-    headerLeft: <Icon name="menu" size={24}
-      iconStyle={{ color: 'white' }} 
-      onPress={ () => navigation.navigate('DrawerToggle') } />    
-  })
-})
+const ReservationNavigator = createStackNavigator(
+  {
+    Reservation: { screen: Reservation },
+  },
+  {
+    navigationOptions: ({ navigation }) => ({
+      headerStyle: {
+        backgroundColor: "#512DA8",
+      },
+      headerTitleStyle: {
+        color: "#fff",
+      },
+      headerTintColor: "#fff",
+      headerLeft: (
+        <Icon
+          name="menu"
+          size={24}
+          iconStyle={{ color: "white" }}
+          onPress={() => navigation.navigate("DrawerToggle")}
+        />
+      ),
+    }),
+  }
+);
+
+//
+const FavoritesNavigator = createStackNavigator(
+  {
+    Favorites: { screen: Favorites },
+  },
+  {
+    navigationOptions: ({ navigation }) => ({
+      headerStyle: {
+        backgroundColor: "#512DA8",
+      },
+      headerTitleStyle: {
+        color: "#fff",
+      },
+      headerTintColor: "#fff",
+      headerLeft: (
+        <Icon
+          name="menu"
+          size={24}
+          iconStyle={{ color: "white" }}
+          onPress={() => navigation.navigate("DrawerToggle")}
+        />
+      ),
+    }),
+  }
+);
 
 //
 const CustomDrawerContentComponent = (props) => (
@@ -254,21 +289,36 @@ const MainNavigator = createDrawerNavigator(
         ),
       },
     },
-    Reservation:
-      { screen: ReservationNavigator,
-        navigationOptions: {
-          title: 'Reserve Table',
-          drawerLabel: 'Reserve Table',
-          drawerIcon: ({ tintColor, focused }) => (
-            <Icon
-              name='cutlery'
-              type='font-awesome'            
-              size={24}
-              iconStyle={{ color: tintColor }}
-            />
-          ),
-        }
-      }
+    Favorites: {
+      screen: FavoritesNavigator,
+      navigationOptions: {
+        title: "My Favorites",
+        drawerLabel: "My Favorites",
+        drawerIcon: ({ tintColor }) => (
+          <Icon
+            name="heart"
+            type="font-awesome"
+            size={24}
+            iconStyle={{ color: tintColor }}
+          />
+        ),
+      },
+    },
+    Reservation: {
+      screen: ReservationNavigator,
+      navigationOptions: {
+        title: "Reserve Table",
+        drawerLabel: "Reserve Table",
+        drawerIcon: ({ tintColor }) => (
+          <Icon
+            name="cutlery"
+            type="font-awesome"
+            size={24}
+            iconStyle={{ color: tintColor }}
+          />
+        ),
+      },
+    },
   },
   {
     drawerBackgroundColor: "#d1c4e9",
