@@ -90,4 +90,10 @@ export const STYLES = StyleSheet.create({
     fontSize: 18,
     margin: 10,
   },
+  error: {
+    color: 'red',
+    fontSize: 18,
+    fontWeight: "bold",
+    textAlign: "center",
+  }
 });
