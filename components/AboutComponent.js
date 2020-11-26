@@ -1,3 +1,5 @@
+import * as Animatable from "react-native-animatable";
+
 import { Card, ListItem } from "react-native-elements";
 import { FlatList, Image, ScrollView, Text } from "react-native";
 import React, { Component } from "react";
@@ -71,26 +73,30 @@ class About extends Component {
     } else if (this.props.leaders.errMess) {
       return (
         <ScrollView>
-          <History />
-          <Card>
-            <Card.Title>Corporate Leadership</Card.Title>
-            <Text>{this.props.leaders.errMess}</Text>
-          </Card>
+          <Animatable.View animation="fadeInDown" duration={2000} delay={1000}>
+            <History />
+            <Card>
+              <Card.Title>Corporate Leadership</Card.Title>
+              <Text>{this.props.leaders.errMess}</Text>
+            </Card>
+          </Animatable.View>
         </ScrollView>
       );
     } else {
       return (
         <ScrollView>
-          <History />
-          <Card>
-            <Card.Title>Corporate Leadership</Card.Title>
-            <Card.Divider />
-            <FlatList
-              data={this.props.leaders.leaders}
-              renderItem={RenderLeaderItem}
-              keyExtractor={(item) => item.id.toString()}
-            />
-          </Card>
+          <Animatable.View animation="fadeInDown" duration={2000} delay={1000}>
+            <History />
+            <Card>
+              <Card.Title>Corporate Leadership</Card.Title>
+              <Card.Divider />
+              <FlatList
+                data={this.props.leaders.leaders}
+                renderItem={RenderLeaderItem}
+                keyExtractor={(item) => item.id.toString()}
+              />
+            </Card>
+          </Animatable.View>
         </ScrollView>
       );
     }

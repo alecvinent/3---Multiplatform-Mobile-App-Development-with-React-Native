@@ -1,3 +1,5 @@
+import * as Animatable from "react-native-animatable";
+
 import { FlatList, Text, View } from "react-native";
 import React, { Component } from "react";
 
@@ -21,15 +23,21 @@ class Menu extends Component {
   render() {
     const RenderMenuItem = ({ item, index }) => {
       return (
-        <Tile
-          key={index}
-          title={item.name}
-          caption={item.description}
-          featured
-          hideChevron={true}
-          onPress={() => navigate("DishDetail", { dishId: item.id })}
-          imageSrc={{ uri: baseUrl + item.image }}
-        />
+        <Animatable.View
+          animation="fadeInRightBig"
+          duration={2000}
+          delay={1000}
+        >
+          <Tile
+            key={index}
+            title={item.name}
+            caption={item.description}
+            featured
+            hideChevron={true}
+            onPress={() => navigate("DishDetail", { dishId: item.id })}
+            imageSrc={{ uri: baseUrl + item.image }}
+          />
+        </Animatable.View>
       );
     };
 

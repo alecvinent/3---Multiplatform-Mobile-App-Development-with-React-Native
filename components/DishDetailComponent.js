@@ -1,3 +1,5 @@
+import * as Animatable from "react-native-animatable";
+
 import {
   Button,
   FlatList,
@@ -38,34 +40,38 @@ function RenderDish(props) {
 
   if (dish != null) {
     return (
-      <Card
-        style={STYLES.image}
-        featuredTitle={dish.name}
-        featuredSubtitle={dish.category}
-        image={{ uri: baseUrl + dish.image }}
-      >
-        <Text style={{ marginBottom: 10 }}>{dish.description}</Text>
-        <View style={{ flexDirection: "row", justifyContent: "center" }}>
-          <Icon
-            raised
-            reverse
-            name={props.favorite ? "heart" : "heart-o"}
-            type="font-awesome"
-            color="#f50"
-            onPress={() =>
-              props.favorite ? console.log("Already favorite") : props.onPress()
-            }
-          />
-          <Icon
-            raised
-            reverse
-            name="edit"
-            type="font-awesome"
-            color="#517fa4"
-            onPress={() => props.openCommentForm()}
-          />
-        </View>
-      </Card>
+      <Animatable.View animation="fadeInDown" duration={2000} delay={1000}>
+        <Card
+          style={STYLES.image}
+          featuredTitle={dish.name}
+          featuredSubtitle={dish.category}
+          image={{ uri: baseUrl + dish.image }}
+        >
+          <Text style={{ marginBottom: 10 }}>{dish.description}</Text>
+          <View style={{ flexDirection: "row", justifyContent: "center" }}>
+            <Icon
+              raised
+              reverse
+              name={props.favorite ? "heart" : "heart-o"}
+              type="font-awesome"
+              color="#f50"
+              onPress={() =>
+                props.favorite
+                  ? console.log("Already favorite")
+                  : props.onPress()
+              }
+            />
+            <Icon
+              raised
+              reverse
+              name="edit"
+              type="font-awesome"
+              color="#517fa4"
+              onPress={() => props.openCommentForm()}
+            />
+          </View>
+        </Card>
+      </Animatable.View>
     );
   } else {
     return <View />;
@@ -99,13 +105,15 @@ function RenderComments(props) {
   };
 
   return (
-    <Card title="Comments">
-      <FlatList
-        data={comments}
-        renderItem={renderCommentItem}
-        keyExtractor={(item) => item.id.toString()}
-      />
-    </Card>
+    <Animatable.View animation="fadeInDown" duration={2000} delay={1000}>
+      <Card title="Comments">
+        <FlatList
+          data={comments}
+          renderItem={renderCommentItem}
+          keyExtractor={(item) => item.id.toString()}
+        />
+      </Card>
+    </Animatable.View>
   );
 }
 
@@ -117,7 +125,7 @@ class DishDetail extends Component {
       author: "",
       comment: "",
       showModal: false,
-      message: ''
+      message: "",
     };
   }
 
@@ -155,7 +163,7 @@ class DishDetail extends Component {
       this.resetCommentForm();
     } else {
       this.setState({
-        message: "Error: Check empty fields!!"
+        message: "Error: Check empty fields!!",
       });
     }
   }

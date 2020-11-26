@@ -1,3 +1,5 @@
+import * as Animatable from "react-native-animatable";
+
 import { Alert, Animated, Platform } from "react-native";
 import { FlatList, Text, View } from "react-native";
 import { Icon, ListItem } from "react-native-elements";
@@ -32,7 +34,6 @@ class Favorites extends Component {
     const { navigate } = this.props.navigation;
 
     const renderMenuItem = ({ item, index }) => {
-      
       const RightActions = (progress, dragX) => {
         const scale = dragX.interpolate({
           inputRange: [-100, 0],
@@ -94,14 +95,20 @@ class Favorites extends Component {
 
       return (
         <Swipeable renderRightActions={RightActions}>
-          <ListItem
-            key={index}
-            title={item.name}
-            subtitle={item.description}
-            hideChevron={true}
-            onPress={() => navigate("Dishdetail", { dishId: item.id })}
-            leftAvatar={{ source: { uri: baseUrl + item.image } }}
-          />
+          <Animatable.View
+            animation="fadeInRightBig"
+            duration={2000}
+            delay={1000}
+          >
+            <ListItem
+              key={index}
+              title={item.name}
+              subtitle={item.description}
+              hideChevron={true}
+              onPress={() => navigate("Dishdetail", { dishId: item.id })}
+              leftAvatar={{ source: { uri: baseUrl + item.image } }}
+            />
+          </Animatable.View>
         </Swipeable>
       );
     };
