@@ -1,5 +1,5 @@
-import { Alert, Animated } from "react-native";
-import { FlatList, Text, TouchableOpacity, View } from "react-native";
+import { Alert, Animated, Platform } from "react-native";
+import { FlatList, Text, View } from "react-native";
 import { Icon, ListItem } from "react-native-elements";
 import React, { Component } from "react";
 
@@ -32,14 +32,7 @@ class Favorites extends Component {
     const { navigate } = this.props.navigation;
 
     const renderMenuItem = ({ item, index }) => {
-      const rightButton = [
-        {
-          text: "Delete",
-          type: "delete",
-          onPress: () => this.props.deleteFavorite(item.id),
-        },
-      ];
-
+      
       const RightActions = (progress, dragX) => {
         const scale = dragX.interpolate({
           inputRange: [-100, 0],
@@ -61,35 +54,40 @@ class Favorites extends Component {
                   reverse
                   name={"trash-o"}
                   type="font-awesome"
-                  color="#f50" onPress={
-                    () => {
-                        console.log('item.id:', item.id);
-                        
-                        // Works on both Android and iOS
-Alert.alert(
-    'Alert Title',
-    'My Alert Msg',
-    [
-      {
-        text: 'Ask me later',
-        onPress: () => console.log('Ask me later pressed')
-      },
-      {
-        text: 'Cancel',
-        onPress: () => console.log('Cancel Pressed'),
-        style: 'cancel'
-      },
-      { text: 'OK', onPress: () => console.log('OK Pressed') }
-    ],
-    { cancelable: false }
-  );
-                        
+                  color="#f50"
+                  onPress={() => {
+                    console.log("item.id:", item.id);
+
+                    // Works on both Android and iOS
+                    if (Platform.OS !== "web") {
+                      Alert.alert(
+                        "Alert Title",
+                        "My Alert Msg",
+                        [
+                          {
+                            text: "Ask me later",
+                            onPress: () => console.log("Ask me later pressed"),
+                          },
+                          {
+                            text: "Cancel",
+                            onPress: () => console.log("Cancel Pressed"),
+                            style: "cancel",
+                          },
+                          {
+                            text: "OK",
+                            onPress: () => this.props.deleteFavorite(item.id),
+                          },
+                        ],
+                        { cancelable: false }
+                      );
+                    } else {
+                      // cause not worked on web
+                      this.props.deleteFavorite(item.id);
                     }
-                  }                 
+                  }}
                 />
               </Animated.Text>
             </View>
-            
           </>
         );
       };

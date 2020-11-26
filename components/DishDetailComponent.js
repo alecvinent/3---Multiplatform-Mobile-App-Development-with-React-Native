@@ -103,7 +103,7 @@ function RenderComments(props) {
       <FlatList
         data={comments}
         renderItem={renderCommentItem}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.id.toString()}
       />
     </Card>
   );
