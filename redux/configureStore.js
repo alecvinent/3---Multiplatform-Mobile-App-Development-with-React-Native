@@ -8,7 +8,7 @@ import { Leaders } from "../redux/reducers/leaders";
 import { Promotions } from "../redux/reducers/promotions";
 import { composeWithDevTools } from 'redux-devtools-extension';
 import logger from "redux-logger";
-import storage from 'redux-persist/es/storage';
+import storage from 'redux-persist/lib/storage'
 import thunk from "redux-thunk";
 
 //
