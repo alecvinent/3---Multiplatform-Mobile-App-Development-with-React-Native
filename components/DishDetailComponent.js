@@ -12,7 +12,7 @@ import {
   View
 } from "react-native";
 import { Card, Icon, Input, Rating } from "react-native-elements";
-import React, { Component } from "react";
+import React, { Component, useRef } from "react";
 import { postComment, postFavorite } from "../redux/ActionCreators";
 
 import Constants from "expo-constants";
@@ -40,7 +40,7 @@ const mapDispatchToProps = (dispatch) => ({
 function RenderDish(props) {
   const dish = props.dish;
 
-  handleViewRed = ref => this.view = ref;
+  const viewRef = useRef(null);
 
   const recognizeDrag = ({ dx }) => {
     if (dx < -200) return true; // Right to left
@@ -52,7 +52,7 @@ function RenderDish(props) {
       return true;
     },
     onPanResponderGrant: () => {
-      this.view.rubberBand(1000)
+      viewRef.rubberBand(1000)
         .then(endState => console.log(endState.finished ? 'finished' : 'cancelled'));
     },
     onPanResponderEnd: (e, gestureState) => {
@@ -89,7 +89,7 @@ function RenderDish(props) {
         animation="fadeInDown"
         duration={2000}
         delay={1000}
-        ref={this.handleViewRef}
+        ref={viewRef}
         {...panResponder.panHandlers}
       >
         <Card
