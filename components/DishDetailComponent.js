@@ -47,37 +47,62 @@ function RenderDish(props) {
     return false;
   };
 
+  const recognizeComment = ({ dx }) => {
+    if (dx > -200) return true; // left to right
+    return false;
+  };
+
   const panResponder = PanResponder.create({
     onStartShouldSetPanResponder: (e, gestureState) => {
       return true;
     },
     onPanResponderGrant: () => {
-      viewRef.rubberBand(1000)
-        .then(endState => console.log(endState.finished ? 'finished' : 'cancelled'));
+      if (viewRef) {
+        viewRef.current?.rubberBand(1000)
+          .then(endState => console.log(endState.finished ? 'finished' : 'cancelled'));
+      }
     },
     onPanResponderEnd: (e, gestureState) => {
       console.log("pan responder end", gestureState);
-      if (recognizeDrag(gestureState))
-        Alert.alert(
-          "Add Favorite",
-          "Are you sure you wish to add " + dish.name + " to favorite?",
-          [
-            {
-              text: "Cancel",
-              onPress: () => console.log("Cancel Pressed"),
-              style: "cancel",
-            },
-            {
-              text: "OK",
-              onPress: () => {
-                props.favorite
-                  ? console.log("Already favorite")
-                  : props.onPress();
+      if (recognizeDrag(gestureState)) {
+        // show alert
+        if (Platform.OS !== "web") {
+          Alert.alert(
+            "Add Favorite",
+            "Are you sure you wish to add " + dish.name + " to favorite?",
+            [
+              {
+                text: "Cancel",
+                onPress: () => console.log("Cancel Pressed"),
+                style: "cancel",
               },
-            },
-          ],
-          { cancelable: false }
-        );
+              {
+                text: "OK",
+                onPress: () => {
+                  props.favorite
+                    ? console.log("Already favorite")
+                    : props.onPress();
+                },
+              },
+            ],
+            { cancelable: false }
+          );
+        } else {
+          let isOk = confirm("Are you sure you wish to add " + dish.name + " to favorite?");
+          console.log(isOk);
+          if (isOk) {
+            if (props.favorite) {
+              console.log("Already favorite")
+            } else {
+              props.onPress();
+            }
+          }
+        }
+      } else if (recognizeComment(gestureState))  {
+        // left-to-right
+        console.log('left-to-right');
+        props.openCommentForm();
+      }
 
       return true;
     },
