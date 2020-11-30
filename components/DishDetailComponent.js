@@ -1,4 +1,5 @@
 import * as Animatable from "react-native-animatable";
+import * as Sharing from 'expo-sharing';
 
 import {
   Alert,
@@ -8,6 +9,7 @@ import {
   PanResponder,
   Platform,
   ScrollView,
+  Share,
   Text,
   View
 } from "react-native";
@@ -98,7 +100,7 @@ function RenderDish(props) {
             }
           }
         }
-      } else if (recognizeComment(gestureState))  {
+      } else if (recognizeComment(gestureState)) {
         // left-to-right
         console.log('left-to-right');
         props.openCommentForm();
@@ -107,6 +109,25 @@ function RenderDish(props) {
       return true;
     },
   });
+
+  const shareDish = (title, message, url) => {
+    /*
+    Share.share({
+      title: title,
+      message: title + ': ' + message + ' ' + url,
+      url: url
+    }, {
+      dialogTitle: 'Share ' + title
+    });
+    */
+
+    if (Sharing.isAvailableAsync()) {
+      Sharing.shareAsync(url, {
+        dialogTitle: title
+      })
+    }
+
+  };
 
   if (dish != null) {
     return (
@@ -144,6 +165,14 @@ function RenderDish(props) {
               type="font-awesome"
               color="#517fa4"
               onPress={() => props.openCommentForm()}
+            />
+            <Icon
+              raised
+              reverse
+              name="share"
+              type="font-awesome"
+              color="#51d2a8"
+              onPress={() => shareDish(dish.name, dish.description, baseUrl + dish.image)}
             />
           </View>
         </Card>
