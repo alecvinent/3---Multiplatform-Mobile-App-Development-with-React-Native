@@ -111,7 +111,7 @@ function RenderDish(props) {
   });
 
   const shareDish = (title, message, url) => {
-    /*
+    // share native
     Share.share({
       title: title,
       message: title + ': ' + message + ' ' + url,
@@ -119,13 +119,14 @@ function RenderDish(props) {
     }, {
       dialogTitle: 'Share ' + title
     });
-    */
 
+    // expo sharing
+    /*
     if (Sharing.isAvailableAsync()) {
       Sharing.shareAsync(url, {
         dialogTitle: title
       })
-    }
+    }*/
 
   };
 
