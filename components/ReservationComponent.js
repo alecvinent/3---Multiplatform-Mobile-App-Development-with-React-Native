@@ -1,4 +1,6 @@
 import * as Animatable from "react-native-animatable";
+import * as Notifications from 'expo-notifications';
+import * as Permissions from 'expo-permissions';
 
 import {
   Alert,
@@ -86,6 +88,7 @@ class Reservation extends Component {
             text: "OK",
             onPress: () => {
               console.log("Ok Pressed");
+              this.presentLocalNotification(this.state.date);
               this.resetForm();
             },
           },
@@ -99,6 +102,38 @@ class Reservation extends Component {
       this.resetForm();
     }
   }
+
+  //
+  async obtainNotificationPermission() {
+    let permission = await Permissions.getAsync(Permissions.USER_FACIifNG_NOTIFICATIONS);
+    if (permission.status !== 'granted') {
+      permission = await Permissions.askAsync(Permissions.USER_FACING_NOTIFICATIONS);
+      if (permission.status !== 'granted') {
+        Alert.alert('Permission not granted to show notifications');
+      }
+    }
+    return permission;
+  };
+
+  async presentLocalNotification(date) {
+    await this.obtainNotificationPermission();
+    Notifications.scheduleNotificationAsync({
+      content: {
+        title: "Your reservation ",
+        body: 'Reservation for ' + date + ' requested',
+        ios: {
+          sound: true,
+        },
+        android: {
+          sound: true,
+          vibrate: true,
+          color: '#512da8'
+        },
+        data: { data: 'goes here' },
+      },
+      trigger: { seconds: 2 },
+    });
+  };
 
   //
   render() {
