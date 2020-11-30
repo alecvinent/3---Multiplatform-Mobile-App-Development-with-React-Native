@@ -20,6 +20,7 @@ import DishDetail from "./DishDetailComponent";
 import Favorites from "./FavoriteComponent";
 import Home from "./HomeComponent";
 import { Icon } from "react-native-elements";
+import Login from "./LoginComponent";
 import Menu from "./MenuComponent";
 import Reservation from "./ReservationComponent";
 import { STYLES } from "../shared/styles";
@@ -48,6 +49,36 @@ const mapDispatchToProps = (dispatch) => ({
   // resetFeedbackForm: () => { dispatch(actions.reset('feedback'))},
   // postFeedback: (firstname, lastname, telnum, email, agree, contactType, message) => dispatch(postFeedback(firstname, lastname, telnum, email, agree, contactType, message)),
 });
+
+//
+const LoginNavigator = createStackNavigator(
+  {
+    Login: {
+      screen: Login,
+      navigationOptions: ({ navigation }) => ({
+        headerLeft: (
+          <Icon
+            name="menu"
+            size={24}
+            color="white"
+            onPress={() => navigation.toggleDrawer()}
+          />
+        ),
+      }),
+    },
+  },
+  {
+    navigationOptions: {
+      headerStyle: {
+        backgroundColor: "#512dab",
+      },
+      headerTintColor: "#fff",
+      headerTitleStyle: {
+        color: "#fff",
+      },
+    },
+  }
+);
 
 //
 const MenuNavigator = createStackNavigator(
@@ -247,8 +278,18 @@ const CustomDrawerContentComponent = (props) => (
 );
 
 //
-const MainNavigator = createDrawerNavigator(
+const MainNavigator = createDrawerNavigator(  
   {
+    Login: {
+      screen: LoginNavigator,
+      navigationOptions: {
+        title: "Login",
+        drawerLabel: "Login",
+        drawerIcon: ({ tintColor }) => (
+          <Icon name="sign-in" type="font-awesome" color={tintColor} />
+        ),
+      },
+    },
     Home: {
       screen: HomeNavigator,
       navigationOptions: {
@@ -321,6 +362,7 @@ const MainNavigator = createDrawerNavigator(
     },
   },
   {
+    initialRouteName: 'Home',
     drawerBackgroundColor: "#d1c4e9",
     contentComponent: CustomDrawerContentComponent,
   }

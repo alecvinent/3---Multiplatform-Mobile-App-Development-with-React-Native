@@ -372,6 +372,14 @@
       "comment": "wtf!!!!",
       "date": "2020-11-25T20:27:33.423Z",
       "id": 41
+    },
+    {
+      "dishId": 1,
+      "rating": 3,
+      "author": "left2right",
+      "comment": "from left-2right",
+      "date": "2020-11-29T21:26:34.332Z",
+      "id": 42
     }
   ],
   "promotions": [

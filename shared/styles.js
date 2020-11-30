@@ -95,5 +95,21 @@ export const STYLES = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     textAlign: "center",
-  }
+  },
+  loginContainer: {
+    justifyContent: 'center',
+    margin: 20
+  },
+  loginFormInput: {
+    margin: 40,
+    marginRight: 10,
+    backgroundColor: null
+  },
+  loginFormButton: {
+    margin: 60
+  },
+  loginFormCheckbox: {
+    margin: 40,
+    backgroundColor: null
+  },
 });
