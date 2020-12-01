@@ -112,4 +112,21 @@ export const STYLES = StyleSheet.create({
     margin: 40,
     backgroundColor: null
   },
+  loginFormRow: {
+    alignItems: "center",
+    justifyContent: "center",
+    flex: 1,
+    flexDirection: "row",
+    margin: 5,
+  },
+  imageContainer: {
+    flex:1,
+    flexDirection: 'row',
+    margin: 20
+  },
+  image: {
+    margin:10,
+    width: 80,
+    height: 60
+  }
 });
