@@ -4,7 +4,7 @@ import {
   createDrawerNavigator,
   createStackNavigator,
 } from "react-navigation";
-import { Image, Platform, ScrollView, Text, View } from "react-native";
+import { Image, Platform, ScrollView, Text, ToastAndroid, View } from "react-native";
 import React, { Component } from "react";
 import {
   fetchComments,
@@ -22,6 +22,7 @@ import Home from "./HomeComponent";
 import { Icon } from "react-native-elements";
 import Login from "./LoginComponent";
 import Menu from "./MenuComponent";
+import NetInfo from '@react-native-community/netinfo';
 import Reservation from "./ReservationComponent";
 import { STYLES } from "../shared/styles";
 import { connect } from "react-redux";
@@ -359,12 +360,84 @@ const MainNavigator = createDrawerNavigator(
 
 //
 class Main extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      evento: null
+    };
+  }
+
+  //
+  handleFirstConnectivityChange = (connectionInfo) => {
+    switch (connectionInfo.type) {
+      case 'none':
+        ToastAndroid.show("You're offline");
+        break;
+      case 'wifi':
+        ToastAndroid.show("You're on wifi");
+        break;
+      case 'cellular':
+        ToastAndroid.show("You're cellular");
+        break;
+      case 'unknown':
+        ToastAndroid.show("You have an unknown connection");
+        break;
+
+      default:
+        break;
+    }
+  };
+
   //
   componentDidMount() {
     this.props.fetchDishes();
     this.props.fetchComments();
     this.props.fetchPromos();
     this.props.fetchLeaders();
+
+    //
+    /* NetInfo.getConnectionInfo()
+      .then((connectionInfo) => {
+        ToastAndroid.show(
+          'Initial, type: ' +
+          connectionInfo.type +
+          ', effectiveType: ' +
+          connectionInfo.effectiveType
+        );
+      }); */
+
+      NetInfo.fetch().then(state => {
+        ToastAndroid.show('Connection type', state.type);
+        ToastAndroid.show('Is connected?', state.isConnected);
+      });
+
+    //
+    /*
+    NetInfo.addEventListener(
+      'connectionChange',
+      this.handleFirstConnectivityChange
+    );
+    */
+   const unsubscribe = NetInfo.addEventListener(state => {
+    ToastAndroid.show('Connection type', state.type);
+    ToastAndroid.show('Is connected?', state.isConnected);
+  });
+  this.setState({evento: unsubscribe});
+  
+
+  }
+
+  //
+  componentWillUnmount() {
+    /*
+    NetInfo.removeEventListener(
+      'connectionChange',
+      this.handleFirstConnectivityChange
+    );
+    */
+      
+    this.state.evento(); // // To unsubscribe to these update, just use:
   }
 
   //
