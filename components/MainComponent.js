@@ -51,34 +51,23 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 //
-const LoginNavigator = createStackNavigator(
-  {
-    Login: {
-      screen: Login,
-      navigationOptions: ({ navigation }) => ({
-        headerLeft: (
-          <Icon
-            name="menu"
-            size={24}
-            color="white"
-            onPress={() => navigation.toggleDrawer()}
-          />
-        ),
-      }),
+const LoginNavigator = createStackNavigator({
+  Login: Login
+}, {
+  navigationOptions: ({ navigation }) => ({
+    headerStyle: {
+      backgroundColor: "#512DA8"
     },
-  },
-  {
-    navigationOptions: {
-      headerStyle: {
-        backgroundColor: "#512dab",
-      },
-      headerTintColor: "#fff",
-      headerTitleStyle: {
-        color: "#fff",
-      },
+    headerTitleStyle: {
+      color: "#fff"
     },
-  }
-);
+    title: 'Login',
+    headerTintColor: "#fff",
+    headerLeft: <Icon name="menu" size={24}
+      iconStyle={{ color: 'white' }}
+      onPress={() => navigation.toggleDrawer()} />
+  })
+});
 
 //
 const MenuNavigator = createStackNavigator(
@@ -278,7 +267,7 @@ const CustomDrawerContentComponent = (props) => (
 );
 
 //
-const MainNavigator = createDrawerNavigator(  
+const MainNavigator = createDrawerNavigator(
   {
     Login: {
       screen: LoginNavigator,
