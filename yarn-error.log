@@ -1,5 +1,5 @@
 Arguments: 
-  D:\webserver\NodeJS\node.exe D:\webserver\NodeJS\node_modules\yarn\bin\yarn.js add expo-image-picker
+  D:\webserver\NodeJS\node.exe D:\webserver\NodeJS\node_modules\yarn\bin\yarn.js add @react-native-community/netinfo
 
 PATH: 
   C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;D:\webserver\NodeJS;D:\webserver\NodeJS\npm-cache;C:\Program Files\TortoiseGit\bin;C:\Program Files\Git\cmd;D:\webserver\NodeJS\node_modules\yarn\bin\;C:\Users\alec\AppData\Roaming\npm\;C:\Program Files\TotalCommander2015\Tools\Hexelon\;C:\Program Files\TotalCommander2015\Tools\Notepad++\;C:\Users\alec\AppData\Local\Microsoft\WindowsApps;
@@ -30,9 +30,13 @@ npm manifest:
     "dependencies": {
       "@react-native-async-storage/async-storage": "^1.13.2",
       "@react-native-community/datetimepicker": "^3.0.6",
+      "@react-native-community/netinfo": "^5.9.9",
       "expo": "~39.0.2",
+      "expo-asset": "^8.2.0",
       "expo-cli": "^4.0.3",
       "expo-constants": "~9.2.0",
+      "expo-image-manipulator": "^8.3.0",
+      "expo-image-picker": "^9.1.1",
       "expo-mail-composer": "^8.4.0",
       "expo-notifications": "^0.7.2",
       "expo-secure-store": "^9.2.0",
@@ -2413,6 +2417,11 @@ Lockfile:
     integrity sha512-w+c+U7sR3JVVI+oJE8ZoprBU4d8TG2KG6I+WeM5DCnszxSHS+pJVZPSc5hWHMTDb12PkBlNJDpMoasyDGLPUdw==
     dependencies:
       invariant "^2.2.4"
+  
+  "@react-native-community/netinfo@^5.9.9":
+    version "5.9.9"
+    resolved "https://registry.yarnpkg.com/@react-native-community/netinfo/-/netinfo-5.9.9.tgz#5e022637f5e08bd74bf94a0c3315748acd4589f9"
+    integrity sha512-Gp0XV4BgabvzkL4Dp6JAsA2l9LcmgBAq3erCLdvRZmEFz7guCWTogQWVfFtl+IbU0uqfwfo9fm2+mQiwdudLCw==
   
   "@segment/loosely-validate-event@^2.0.0":
     version "2.0.0"
@@ -5974,7 +5983,7 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/expo-application/-/expo-application-2.3.0.tgz#5e6929a1fcee543ac433fb2cee1f88738369e26b"
     integrity sha512-Jbx8iWAjL5JOvXNUnFaTr5PlMgs8k4MV6SGonYw/a21bWDDERyJQc9EYnaoaSJJJeE/4neVsF7Q3GN1QPz7pUA==
   
-  expo-asset@~8.2.0:
+  expo-asset@^8.2.0, expo-asset@~8.2.0:
     version "8.2.0"
     resolved "https://registry.yarnpkg.com/expo-asset/-/expo-asset-8.2.0.tgz#2f72491064c02d4de32e9187d474deb9cec33003"
     integrity sha512-Z4D8jcN19GJ/pCqm6slP+Yhao1TP1RkSK/NIHpMKlkz36aqSh0V58J97zvwb1WdkYef5evAzj2uDGpH/VwLOdQ==
@@ -6080,6 +6089,19 @@ Lockfile:
     dependencies:
       fbjs "1.0.0"
       fontfaceobserver "^2.1.0"
+  
+  expo-image-manipulator@^8.3.0:
+    version "8.3.0"
+    resolved "https://registry.yarnpkg.com/expo-image-manipulator/-/expo-image-manipulator-8.3.0.tgz#1c6c91e4cf1cd6bbdab34ff68575b4933f39198c"
+    integrity sha512-aig7uCB3G/D3y52/p0ZXG2rGyR2Gw1PkFRb7H/wGko766GTbVsjxKcIvOc0dyNEFBF4JxlQhtdzrJQC8V2Ei5g==
+  
+  expo-image-picker@^9.1.1:
+    version "9.1.1"
+    resolved "https://registry.yarnpkg.com/expo-image-picker/-/expo-image-picker-9.1.1.tgz#42abe9deb595fa9f9d8ac0d2ba8aad2cd6f69581"
+    integrity sha512-Etz2OQhRflfx+xFbSdma8QLZsnV/yq0M/yqYlsi3/RLiWAQYM/D/VmRfDDPiG10gm+KX3Xb5iKplNjPrWeTuQg==
+    dependencies:
+      expo-permissions "~9.3.0"
+      uuid "7.0.2"
   
   expo-keep-awake@~8.3.0:
     version "8.3.0"
@@ -14213,6 +14235,11 @@ Lockfile:
     version "3.3.2"
     resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.3.2.tgz#1b4af4955eb3077c501c23872fc6513811587131"
     integrity sha512-yXJmeNaw3DnnKAOKJE51sL/ZaYfWJRl1pK9dr19YFCu0ObS231AB1/LbqTKRAQ5kw8A90rA6fr4riOUpTZvQZA==
+  
+  uuid@7.0.2:
+    version "7.0.2"
+    resolved "https://registry.yarnpkg.com/uuid/-/uuid-7.0.2.tgz#7ff5c203467e91f5e0d85cfcbaaf7d2ebbca9be6"
+    integrity sha512-vy9V/+pKG+5ZTYKf+VcphF5Oc6EFiu3W8Nv3P3zIh0EqVI80ZxOzuPfe9EHjkFNvf8+xuTHVeei4Drydlx4zjw==
   
   uuid@^2.0.1:
     version "2.0.3"

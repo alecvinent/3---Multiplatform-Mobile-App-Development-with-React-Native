@@ -372,16 +372,16 @@ class Main extends Component {
   handleFirstConnectivityChange = (connectionInfo) => {
     switch (connectionInfo.type) {
       case 'none':
-        ToastAndroid.show("You're offline");
+        ToastAndroid.show("You're offline", ToastAndroid.LONG);
         break;
       case 'wifi':
-        ToastAndroid.show("You're on wifi");
+        ToastAndroid.show("You're on wifi", ToastAndroid.LONG);
         break;
       case 'cellular':
-        ToastAndroid.show("You're cellular");
+        ToastAndroid.show("You're cellular", ToastAndroid.LONG);
         break;
       case 'unknown':
-        ToastAndroid.show("You have an unknown connection");
+        ToastAndroid.show("You have an unknown connection", ToastAndroid.LONG);
         break;
 
       default:
@@ -407,10 +407,10 @@ class Main extends Component {
         );
       }); */
 
-      NetInfo.fetch().then(state => {
-        ToastAndroid.show('Connection type', state.type);
-        ToastAndroid.show('Is connected?', state.isConnected);
-      });
+    NetInfo.fetch().then(state => {
+      ToastAndroid.show('Connection type' + state.type, ToastAndroid.LONG);
+      ToastAndroid.show('Is connected?' + state.isConnected, ToastAndroid.LONG);
+    });
 
     //
     /*
@@ -419,12 +419,12 @@ class Main extends Component {
       this.handleFirstConnectivityChange
     );
     */
-   const unsubscribe = NetInfo.addEventListener(state => {
-    ToastAndroid.show('Connection type', state.type);
-    ToastAndroid.show('Is connected?', state.isConnected);
-  });
-  this.setState({evento: unsubscribe});
-  
+    const unsubscribe = NetInfo.addEventListener(state => {
+      ToastAndroid.show('Connection type', state.type);
+      ToastAndroid.show('Is connected?', state.isConnected);
+    });
+    this.setState({ evento: unsubscribe });
+
 
   }
 
@@ -436,7 +436,7 @@ class Main extends Component {
       this.handleFirstConnectivityChange
     );
     */
-      
+
     this.state.evento(); // // To unsubscribe to these update, just use:
   }
 
