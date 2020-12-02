@@ -1,4 +1,5 @@
 import * as Animatable from "react-native-animatable";
+import * as Calendar from 'expo-calendar';
 import * as Notifications from 'expo-notifications';
 import * as Permissions from 'expo-permissions';
 
@@ -89,6 +90,7 @@ class Reservation extends Component {
             onPress: () => {
               console.log("Ok Pressed");
               this.presentLocalNotification(this.state.date);
+              this.addReservationToCalendar(this.state.date);
               this.resetForm();
             },
           },
@@ -98,10 +100,48 @@ class Reservation extends Component {
     }
     else {
       let isOk = confirm("Is your reservation Ok?" + dataMessage);
-      console.log(isOk);
+      if (isOk) {
+        this.addReservationToCalendar(this.state.date);
+      }
+
       this.resetForm();
     }
   }
+
+  //
+  addReservationToCalendar(date) {
+    if (this.obtainCalendarPermission()) {
+
+      // getting default calendar cause Calendar.DEFAULT was deprecated.
+      // https://docs.expo.io/versions/v39.0.0/sdk/calendar/#usage
+
+      const defaultCalendarSource =
+        Platform.OS === 'ios'
+          ? this.getDefaultCalendarSource()
+          : { isLocalAccount: true, name: 'Expo Calendar' };
+
+      if (defaultCalendarSource) {
+
+        let milliseconds = Date.parse(date);
+        let end_date = new Date(milliseconds + 2 * 3600 * 1000); // 2h later
+
+        const event = Calendar.createEventAsync(defaultCalendarSource, {
+          title: 'Con Fusion Table Reservation',
+          startDate: date,
+          endDate: end_date,
+          location: '121, Clear Water Bay Road, Clear Water Bay, Kowloon, Hong Kong',
+          timeZone: 'Asia/Hong_Kong'
+        });
+      }
+    }
+  }
+
+  //
+  async getDefaultCalendarSource() {
+    const calendars = await Calendar.getCalendarsAsync();
+    const defaultCalendars = calendars.filter(each => each.source.name === 'Default');
+    return defaultCalendars[0].source;
+  };
 
   //
   async obtainNotificationPermission() {
@@ -114,6 +154,12 @@ class Reservation extends Component {
     }
     return permission;
   };
+
+  //
+  async obtainCalendarPermission() {
+    let permission = await Permissions.getAsync(Permissions.CALENDAR);
+    return permission === 'granted' ? true : false;
+  }
 
   async presentLocalNotification(date) {
     await this.obtainNotificationPermission();

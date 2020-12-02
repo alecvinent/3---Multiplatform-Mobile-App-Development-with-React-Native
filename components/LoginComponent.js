@@ -141,6 +141,7 @@ class RegisterTab extends Component {
         }
     }
 
+    //
     getImageFromCamera = async () => {
         const cameraPermission = await Permissions.askAsync(Permissions.CAMERA);
         const cameraRollPermission = await Permissions.askAsync(Permissions.CAMERA_ROLL);
@@ -158,6 +159,25 @@ class RegisterTab extends Component {
 
     }
 
+    //
+    getImageFromGallery = async () => {
+        console.log('getImageFromGallery');
+        const cameraRollPermission = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+
+        if (cameraRollPermission.status === 'granted') {
+            let capturedImage = await ImagePicker.launchImageLibraryAsync({
+                allowsEditing: true,
+                aspect: [4, 3],
+            });
+            if (!capturedImage.cancelled) {
+                console.log(capturedImage);
+                this.capturedImage(capturedImage.uri);
+            }
+        }
+
+    }
+
+    //
     processImage = async (imageUri) => {
         let processedImage = await ImageManipulator.manipulateAsync(
             imageUri, [{
@@ -170,6 +190,7 @@ class RegisterTab extends Component {
         this.setState({ imageUrl: processedImage.uri });
     };
 
+    //
     static navigationOptions = {
         title: 'Register',
         tabBarIcon: ({ tintColor, focused }) => (
@@ -182,6 +203,7 @@ class RegisterTab extends Component {
         )
     };
 
+    //
     handleRegister() {
         console.log(JSON.stringify(this.state));
         if (this.state.remember)
@@ -189,6 +211,7 @@ class RegisterTab extends Component {
                 .catch((error) => console.log('Could not save user info', error));
     }
 
+    //
     render() {
         return (
             <ScrollView>
@@ -202,6 +225,10 @@ class RegisterTab extends Component {
                         <Button
                             title="Camera"
                             onPress={this.getImageFromCamera}
+                        />
+                        <Button style={{margin: 5}}
+                            title="Gallery"
+                            onPress={this.getImageFromGallery}
                         />
                     </View>
                     <Input
@@ -270,7 +297,7 @@ class RegisterTab extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        justifyContent: 'center',
+        justifyContent: 'space-around',
         margin: 20,
     },
     imageContainer: {
